@@ -144,30 +144,32 @@
         }
         /* Scroll to Top Button */
         .scroll-to-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background-color: #007bff;
-            color: white;
-            border: none;
+        position: fixed;
+        bottom: 20px; /* Slightly above the bottom edge */
+        right: 20px; /* Keeps it on the right side */
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 15px;
+        border-radius: 50%;
+        font-size: 24px;
+        cursor: pointer;
+        display: none;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adds a shadow */
+        transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+    .scroll-to-top:hover {
+        background-color: #0056b3; /* Darken on hover */
+        transform: scale(1.1); /* Slightly larger on hover */
+    }
+    @media (max-width: 768px) {
+        .scroll-to-top {
             padding: 10px;
-            border-radius: 50%;
-            font-size: 20px;
-            cursor: pointer;
-            display: none;
+            font-size: 18px; /* Smaller for mobile */
+            bottom: 15px;
+            right: 15px;
         }
-        @media (min-width: 768px) {
-            .blog-item {
-                flex-direction: row;
-                align-items: flex-start;
-            }
-            .blog-item.even {
-                flex-direction: row-reverse;
-            }
-            .blog-content {
-                margin-top: 0;
-            }
-        }
+    }
     </style>
 </head>
 <body>
@@ -265,13 +267,12 @@
 
         // Scroll to Top
         const scrollToTopBtn = document.querySelector('.scroll-to-top');
-        window.addEventListener('scroll', () => {
-            scrollToTopBtn.style.display = window.scrollY > 300 ? 'block' : 'none';
-        });
-        function scrollToTop() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
+    window.addEventListener('scroll', () => {
+        scrollToTopBtn.style.display = window.scrollY > 300 ? 'block' : 'none';
+    });
+    function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
         // Scroll animation for blog items
         const blogItems = document.querySelectorAll('.blog-item');
         const observer = new IntersectionObserver(entries => {
