@@ -236,73 +236,54 @@
             </div>
         </div>
     </div>
- <button class="scroll-to-top" onclick="scrollToTop()">
+
+    <button class="scroll-to-top" onclick="scrollToTop()">
         <i class="fas fa-arrow-up"></i>
     </button>
+
     <div class="footer">
-        <p>&copy; 2024 Raihan_official0307. Semua Hak Dilindungi. | <a href="#">Kebijakan Privasi</a> | <a href="#">Kontak</a></p>
+        <p>&copy; 2024 Raihan_official0307. Semua Hak Dilindungi. | <a href="#">Kebijakan Privasi</a></p>
     </div>
 
     <script>
-        const mainCarouselImages = document.querySelectorAll('.main-carousel .carousel-images img');
-        const sideCarouselImages = document.querySelectorAll('.side-carousel .carousel-images img');
-        let mainIndex = 0;
-        let sideIndex = 0;
+        // Carousel code
+        let mainIndex = 0, sideIndex = 0;
+        const mainImages = document.querySelectorAll('.main-carousel .carousel-images img');
+        const sideImages = document.querySelectorAll('.side-carousel .carousel-images img');
 
-        function switchImage(images, index) {
-            images.forEach((img, i) => {
-                img.classList.toggle('active', i === index);
-            });
+        function cycleImages(images, index) {
+            images.forEach(img => img.classList.remove('active'));
+            images[index].classList.add('active');
         }
 
-        function autoSlide() {
-            mainIndex = (mainIndex + 1) % mainCarouselImages.length;
-            sideIndex = (sideIndex + 1) % sideCarouselImages.length;
-            switchImage(mainCarouselImages, mainIndex);
-            switchImage(sideCarouselImages, sideIndex);
-        }
+        setInterval(() => {
+            mainIndex = (mainIndex + 1) % mainImages.length;
+            sideIndex = (sideIndex + 1) % sideImages.length;
+            cycleImages(mainImages, mainIndex);
+            cycleImages(sideImages, sideIndex);
+        }, 3000);
 
-        setInterval(autoSlide, 3000); // Change image every 3 seconds
-         const mainCarouselImages = document.querySelectorAll('.main-carousel .carousel-images img');
-        const sideCarouselImages = document.querySelectorAll('.side-carousel .carousel-images img');
-        let mainIndex = 0;
-        let sideIndex = 0;
-
-        function switchImage(images, index) {
-            images.forEach((img, i) => {
-                img.classList.toggle('active', i === index);
-            });
-        }
-
-        function autoSlide() {
-            mainIndex = (mainIndex + 1) % mainCarouselImages.length;
-            sideIndex = (sideIndex + 1) % sideCarouselImages.length;
-            switchImage(mainCarouselImages, mainIndex);
-            switchImage(sideCarouselImages, sideIndex);
-        }
-
-        setInterval(autoSlide, 3000);
-
-        // Scroll to Top Button
-        const scrollToTopButton = document.querySelector('.scroll-to-top');
+        // Scroll to Top
+        const scrollToTopBtn = document.querySelector('.scroll-to-top');
         window.addEventListener('scroll', () => {
-            scrollToTopButton.style.display = window.scrollY > 300 ? 'block' : 'none';
+            scrollToTopBtn.style.display = window.scrollY > 300 ? 'block' : 'none';
         });
-
         function scrollToTop() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Scroll Animation for Blog Items
+        // Scroll animation for blog items
         const blogItems = document.querySelectorAll('.blog-item');
-        window.addEventListener('scroll', () => {
-            blogItems.forEach(item => {
-                const itemTop = item.getBoundingClientRect().top;
-                if (itemTop < window.innerHeight - 100) {
-                    item.classList.add('visible');
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target); // Optional to stop observing once visible
                 }
             });
-        });
+        }, { threshold: 0.5 });
+
+        blogItems.forEach(item => observer.observe(item));
     </script>
 </body>
 </html>
