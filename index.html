@@ -1,25 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog Web Page</title>
+    <title>Web Page with Auto-Sliding Banners</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
     <style>
-        /* Basic styling */
         body {
             margin: 0;
             font-family: Arial, sans-serif;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            background-color: #f4f4f9;
         }
         .content {
             flex: 1;
         }
-
-        /* Navbar styling */
         .navbar {
             background: linear-gradient(to right, #4a90e2, #6a9ff8);
             padding: 10px 20px;
@@ -36,15 +30,15 @@
             margin: 0 15px;
             font-size: 16px;
         }
-        .search-container {
+        .navbar .search-container {
             display: flex;
             align-items: center;
         }
-        .search-container input[type="text"] {
+        .navbar input[type="text"] {
             padding: 5px;
             font-size: 14px;
         }
-        .search-container button {
+        .navbar button {
             padding: 5px 10px;
             background-color: #007bff;
             color: white;
@@ -52,69 +46,50 @@
             cursor: pointer;
             font-size: 14px;
         }
-
-        /* Banner container */
         .banner-container {
             display: flex;
-            flex-direction: column;
+            flex-wrap: wrap;
             gap: 10px;
             margin: 20px;
         }
-        .banner img {
-            width: 100%;
-            height: auto;
-            border-radius: 5px;
-        }
-
-        /* Blog section styling */
-        .blog-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            margin: 20px;
-            gap: 20px;
-        }
-        .blog-post {
-            background: white;
-            border-radius: 5px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        .banner-carousel {
+            position: relative;
             overflow: hidden;
-            transition: transform 0.3s;
-            width: calc(50% - 10px); /* For two columns */
-            max-width: 100%;
+            border-radius: 5px;
         }
-        .blog-post:hover {
-            transform: translateY(-5px);
-        }
-        .blog-image img {
+        .carousel-images img {
             width: 100%;
-            height: 200px;
+            height: 100%;
+            display: none;
             object-fit: cover;
         }
-        .blog-content {
-            padding: 15px;
+        .carousel-images img.active {
+            display: block;
+            transition: opacity 1s ease-in-out;
         }
-        .blog-content h3 {
-            margin: 0;
-            font-size: 1.5em;
-            color: #333;
+        .main-carousel {
+            flex: 2;
+            height: 300px;
         }
-        .blog-content p {
-            margin: 10px 0 0;
-            color: #666;
-            font-size: 0.9em;
-            line-height: 1.5;
+        .side-carousel {
+            flex: 1;
+            height: 300px;
         }
-
-        /* Sidebar styling */
-        .sidebar {
-            background: #4a90e2;
-            color: white;
-            padding: 15px;
+        .news-section {
+            margin: 20px;
+            padding: 20px;
+            background-color: #f5f5f5;
             border-radius: 5px;
         }
-
-        /* Footer styling */
+        .news-item {
+            margin-bottom: 15px;
+        }
+        .news-item h3 {
+            margin: 0;
+        }
+        .news-item p {
+            margin: 5px 0 0;
+        }
         .footer {
             background-color: #333;
             color: white;
@@ -128,17 +103,6 @@
         }
         .footer a:hover {
             text-decoration: underline;
-        }
-
-        /* Responsive layout adjustments */
-        @media (max-width: 768px) {
-            .blog-container {
-                flex-direction: column;
-                gap: 15px;
-            }
-            .blog-post {
-                width: 100%;
-            }
         }
     </style>
 </head>
@@ -158,55 +122,66 @@
     </div>
 
     <div class="content">
-        <!-- Banner Section -->
         <div class="banner-container">
-            <div class="banner">
-                <img src="bannerutama.jpeg" alt="Main Banner">
+            <!-- Main Banner Carousel -->
+            <div class="banner-carousel main-carousel">
+                <div class="carousel-images">
+                    <img src="https://picsum.photos/id/1015/1200/300" class="active" alt="Main Banner 1">
+                    <img src="https://picsum.photos/id/1020/1200/300" alt="Main Banner 2">
+                    <img src="https://picsum.photos/id/1035/1200/300" alt="Main Banner 3">
+                </div>
             </div>
-            <div class="banner">
-                <img src="sidebanner.jpg" alt="Side Banner">
+            <!-- Side Banner Carousel -->
+            <div class="banner-carousel side-carousel">
+                <div class="carousel-images">
+                    <img src="https://picsum.photos/id/1045/600/300" class="active" alt="Side Banner 1">
+                    <img src="https://picsum.photos/id/1050/600/300" alt="Side Banner 2">
+                    <img src="https://picsum.photos/id/1065/600/300" alt="Side Banner 3">
+                </div>
             </div>
         </div>
 
-        <!-- Blog Posts Section -->
-        <div class="blog-container">
-            <div class="blog-post">
-                <div class="blog-image">
-                    <img src="blog1.jpg" alt="Blog Image 1">
-                </div>
-                <div class="blog-content">
-                    <h3>Perkembangan AI Generatif yang Semakin Canggih</h3>
-                    <p>Teknologi AI generatif, seperti ChatGPT dan DALL·E, terus berkembang pesat, memungkinkan AI menghasilkan konten kreatif yang lebih menyerupai hasil buatan manusia.</p>
-                </div>
+        <div class="news-section">
+            <h2>Berita Terkini tentang AI</h2>
+            <div class="news-item">
+                <h3>1. Perkembangan AI Generatif yang Semakin Canggih</h3>
+                <p>Teknologi AI generatif, seperti ChatGPT dan DALL·E, terus berkembang pesat. Pembaruan terbaru memungkinkan AI menghasilkan konten yang lebih kreatif dan mendekati hasil buatan manusia.</p>
             </div>
-            <div class="blog-post">
-                <div class="blog-image">
-                    <img src="blog2.jpg" alt="Blog Image 2">
-                </div>
-                <div class="blog-content">
-                    <h3>AI dalam Dunia Kesehatan</h3>
-                    <p>Pemanfaatan AI di bidang kesehatan semakin diperluas, dengan teknologi yang dapat mendeteksi penyakit dan meningkatkan akurasi diagnosis.</p>
-                </div>
+            <div class="news-item">
+                <h3>2. AI dalam Dunia Kesehatan</h3>
+                <p>Pemanfaatan AI di bidang kesehatan semakin diperluas, dengan algoritma yang dapat mendeteksi penyakit lebih awal dan memberikan saran pengobatan yang lebih tepat.</p>
             </div>
-            <div class="blog-post">
-                <div class="blog-image">
-                    <img src="blog3.jpg" alt="Blog Image 3">
-                </div>
-                <div class="blog-content">
-                    <h3>Tantangan Etika dalam Penggunaan AI</h3>
-                    <p>Dengan kemajuan teknologi AI, muncul kekhawatiran tentang etika. Penelitian bertanggung jawab untuk memastikan AI digunakan secara aman dan adil.</p>
-                </div>
-            </div>
-            <div class="sidebar">
-                <h3>News & Updates</h3>
-                <p>Stay updated with the latest in AI, technology, and more by checking out our regular posts on these topics.</p>
+            <div class="news-item">
+                <h3>3. Tantangan Etika dalam Penggunaan AI</h3>
+                <p>Seiring dengan semakin majunya teknologi AI, muncul juga kekhawatiran tentang aspek etika. Penggunaan AI yang bertanggung jawab menjadi perhatian utama para peneliti.</p>
             </div>
         </div>
     </div>
 
-    <!-- Footer Section -->
     <div class="footer">
         <p>&copy; 2024 Raihan_official0307. Semua Hak Dilindungi. | <a href="#">Kebijakan Privasi</a> | <a href="#">Kontak</a></p>
     </div>
+
+    <script>
+        const mainCarouselImages = document.querySelectorAll('.main-carousel .carousel-images img');
+        const sideCarouselImages = document.querySelectorAll('.side-carousel .carousel-images img');
+        let mainIndex = 0;
+        let sideIndex = 0;
+
+        function switchImage(images, index) {
+            images.forEach((img, i) => {
+                img.classList.toggle('active', i === index);
+            });
+        }
+
+        function autoSlide() {
+            mainIndex = (mainIndex + 1) % mainCarouselImages.length;
+            sideIndex = (sideIndex + 1) % sideCarouselImages.length;
+            switchImage(mainCarouselImages, mainIndex);
+            switchImage(sideCarouselImages, sideIndex);
+        }
+
+        setInterval(autoSlide, 3000); // Change image every 3 seconds
+    </script>
 </body>
 </html>
